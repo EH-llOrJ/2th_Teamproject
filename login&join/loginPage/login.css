@@ -56,6 +56,10 @@ input:focus::placeholder {
 }
 
 #logBody {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: rgba(255, 255, 255, 0.2);
   max-width: 800px;
   height: 500px;
@@ -65,9 +69,10 @@ input:focus::placeholder {
 }
 
 #logBodyLeft {
-  width: 300px;
+  width: 400px;
   margin: 0 auto;
   height: 100%;
+  padding: 20px;
 }
 
 .login {
@@ -103,7 +108,7 @@ input:focus::placeholder {
 .user_id {
   background-color: rgba(255, 255, 255, 0);
   position: relative;
-  width: 90%;
+  width: 100%;
   height: 51px;
   border: solid 1px black;
   border-width: 0 0 1px 0;
@@ -116,7 +121,7 @@ input:focus::placeholder {
 .user_pw {
   background-color: rgba(255, 255, 255, 0);
   position: relative;
-  width: 90%;
+  width: 100%;
   height: 51px;
   border: solid 1px black;
   border-width: 0 0 1px 0;
