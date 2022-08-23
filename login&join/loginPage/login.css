@@ -191,7 +191,7 @@ input:focus::placeholder {
 #joinFind > a:hover {
   transform: scale(1.1);
   font-weight: 500;
-  transition: all 0.5s;
+  transition: all 0.2s;
 }
 
 #logBodyRight {

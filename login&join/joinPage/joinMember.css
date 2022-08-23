@@ -89,13 +89,23 @@ h1 {
   border: none;
   outline: none;
   position: relative;
-  text-align: start;
+  text-align: end;
   font-size: 13px;
   font-weight: 600;
   width: 50%;
   height: 51px;
   padding: 10px 14px 10px 14px;
   vertical-align: top;
+  color: #726d6d;
+}
+
+.birthName {
+  text-align: start;
+  width: 50%;
+  height: 51px;
+  padding: 17px 14px 10px 14px;
+  font-size: 14px;
+  font-weight: 1000;
   color: #726d6d;
 }
 
