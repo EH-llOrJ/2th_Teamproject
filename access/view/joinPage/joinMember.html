@@ -19,12 +19,9 @@
         <div id="join_title">
         <h1>회원가입</h1>
         </div>
-        <!-- 이메일 정규식 -->
-        <!-- var regEmail =
-                /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-                -->
-        <!-- 이메일 -->
+        <!-- form 태그 값 서버로 전송 -->
         <form action="/signUpPro" method="post">
+          <!-- 이메일 -->
         <div class="content">
         <input type="email" placeholder="이메일" id="id" name="email" class="id" maxlength="30" />
         <!-- 이메일 중복확인 -->
@@ -32,7 +29,6 @@
         </div>
         <!-- 이메일 정규식에 맞게 작성되었는지 check -->
         <div class="emailcheck textStart"></div>
-          <!-- <input type="hidden" id="hidden_id" name="hiddenId" /> -->
           <!-- 비밀번호 -->
           <div class="content">
           <input
@@ -46,8 +42,6 @@
           </div>
           <!-- 비밀번호 정규식에 맞게 작성되었는지 check -->
           <div class="passwordcheck emailcheck textStart"></div>
-          <!-- var reg = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$";
-                    비밀번호 -->
             <!-- 비밀번호 확인 -->
           <div class="content">
           <input
@@ -75,10 +69,8 @@
           <!-- 이름 정규식에 맞게 작성되었는지 check -->
           <div class="namecheck emailcheck textStart"></div>
 
-          <!-- 연락처/생일 -->
+          <!-- 연락처 -->
           <div class="content">
-          <!-- var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; 휴대폰 번호 정규식
-                    (-상관X) -->
           <input
             type="text"
             placeholder="연락처(- 없이 입력)"
@@ -88,8 +80,9 @@
             maxlength="20"
           />
           </div>
-          <!-- 연락처/새일 정규식에 맞게 작성되었는지 check -->
+          <!-- 연락처 정규식에 맞게 작성되었는지 check -->
           <div class="phonecheck emailcheck textStart"></div>
+          <!-- 생년월일 -->
           <div class="content">
             <span class="birthName">생년월일</span>
           <input
@@ -108,24 +101,22 @@
           >
             회원가입 완료
           </button>
-          <!-- <input class="btn" type="button" value="회원가입" disabled="disabled"> -->
         </form>
       </div>
 
     <script>
-      // document.querySelector('#checkbtn').onclick() = function(){   let check =
-      // $('#id').val();   $.ajax({     url : "/",     type : "POST",     data :
-      // {id:check},   }) } document.querySelector('#checkbtn').onclick() = ()=>{
-      // let check = $('#id').val();     $.ajax({       url : "/",       type :
-      // "POST",       data : { id: check },     }) }
+
+      // 회원가입 버튼 활성화 조건(1)
       let idAble = 0;
 
+      // email 중복확인 버튼 클릭시 이벤트
       document.querySelector('#checkBtn').onclick =function(e) {
         e.preventDefault()
         
+        // email 값 변수 담기
         let _iduse = document.querySelector("#id");
-        // let check = $("#id").val();
 
+        // database에 해당 email 찾기 위해 서버로 값 전송
         $.ajax({
           url: "/emailCheck", // /abc라면 메인 홈페이지 / 에서 보낸 값은 /abc 경로에 담기는 개념
           type: "post",
@@ -269,7 +260,6 @@
       document.querySelector("#phoneNum").onkeyup = function () {
         let phoneNum = this.value;
         let phonereg = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/g;
-        // let phonereg = /^\d{3}-\d{3,4}-\d{4}$/;
         //정규식 Pass
         if (phonereg.test(phoneNum) || phoneNum == "") {
           document.querySelector(".phonecheck").innerHTML = "";
@@ -290,17 +280,17 @@
       };
       console.log(sum_);
       window.onkeyup = function () {
-        // 서버통신을 위해 <&& idAble === 1> 추가해야함
         if (idAble === 1 && a == 1 && b == 1 && c == 1 && d == 1 && e == 1) {
           document.querySelector(".btn").disabled = false;
         } else {
           document.querySelector(".btn").disabled = true;
         }
       };
-      //버튼 click시 게임 실행
+      //버튼 click시 
       document.querySelector(".btn").onclick = function () {
         alert("회원 가입을 축하합니다.");
-        window.location.reload();
+        alert('로그인 가능합니다.')
+        window.close();
       };
       // 내일 물어볼 것 : 패스워드 정규식은 왜 전역변수로 선언시 에러가 발생하는가 여기서 콜백을 써서 동기처리로 하는 방법
     </script>

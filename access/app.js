@@ -4,13 +4,22 @@ const path = require("path");
 const dot = require("dotenv").config();
 const { sequelize, User } = require("./model");
 const bcrypt = require("bcrypt");
-const e = require("express");
+const jwt = require("jsonwebtoken");
+const session = require("express-session");
 
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname));
+
+app.use(
+  session({
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 sequelize
   .sync({ force: false })
@@ -39,7 +48,9 @@ app.post("/emailCheck", (req, res) => {
     .then((e) => {
       if (e === null) {
         res.send("usable");
-      } else res.send("disusable");
+      } else {
+        res.send("disusable");
+      }
     })
     .catch((err) => {
       res.send(err);
