@@ -24,6 +24,7 @@
     <!-- loogin 및 ranking Main div 생성 -->
     <div id="logBody">
       <!-- loogin position 구성할 div 생성-->
+      <form action="/login" method="post">
       <div id="logBodyLeft">
         <div class="log_icon">
           <img
@@ -40,8 +41,9 @@
           <input
             class="user_id"
             type="text"
-            maxlength="25"
-            placeholder="Email ID"
+            maxlength="50"
+            placeholder="Email"
+            name="email"
           />
         </div>
         <!-- loogin content2 -->
@@ -55,8 +57,9 @@
           <input
             class="user_pw"
             type="password"
-            maxlength="20"
+            maxlength="30"
             placeholder="Password"
+            name="password"
           />
         </div>
         <div id="joinFind">
@@ -76,8 +79,12 @@
             <button class="logout_btn">로그아웃</button>
           </div> -->
         </div>
+      </form>
         <!-- loogin content4 -->
       </div>
+      <form action="/check" method="get">
+        <button>check</button>
+      </form>
       <!-- ranking 화면 구성할 div 생성 -->
       <div id="logBodyRight">
         <div class="right_top">
