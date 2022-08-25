@@ -47,7 +47,7 @@ input::placeholder {
   text-align: start;
   letter-spacing: 2px;
   font-weight: 600;
-  font-family: "Nanum Gothic Coding", monospace;
+  font-family: "Nanum Myeongjo", serif;
 }
 
 input:focus::placeholder {

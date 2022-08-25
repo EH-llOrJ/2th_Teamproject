@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="view/loginPage/login.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
     <!-- ranking icon -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body id="bg">
     <!-- 게임 제목 -->
@@ -24,7 +24,6 @@
     <!-- loogin 및 ranking Main div 생성 -->
     <div id="logBody">
       <!-- loogin position 구성할 div 생성-->
-      <form action="/login" method="post">
       <div id="logBodyLeft">
         <div class="log_icon">
           <img
@@ -68,23 +67,22 @@
             onclick="window.open(this.href,'회원가입','width=800px , height=650px , toolbar-no , scrollbars=yes'); return false;"
             ><span>Sign up</span></a
           >
-          <a href=""><span>Forgot Password?</span></a>
+          <a href=""><span>Forgot Email/Password?</span></a>
         </div>
         <!-- loogin content3 -->
         <div class="log_btn1">
           <div class="log_btn-outline">
-            <button class="log_btn2">LOGIN</button>
+            <button class="log_btn2" onclick="login()">LOGIN</button>
           </div>
           <!-- <div class="log_btn-outline">
             <button class="logout_btn">로그아웃</button>
           </div> -->
         </div>
-      </form>
         <!-- loogin content4 -->
       </div>
-      <form action="/check" method="get">
+      <!-- <form action="/check" method="get">
         <button>check</button>
-      </form>
+      </form> -->
       <!-- ranking 화면 구성할 div 생성 -->
       <div id="logBodyRight">
         <div class="right_top">
@@ -125,7 +123,29 @@
     </div>
   </body>
   <script type="module" src="view/loginPage/app.js"></script>
+  <script>
+    function login(){
+      let id = $(".user_id").val();
+      let pw = $(".user_pw").val();
+      $.ajax({
+        url:"/login",
+        type:"post",
+        data:{
+          id: id,
+          pw: pw,
+        },success: (data)=>{
+          if (data == 'fail') {
+            alert("로그인 실패 Eamil/Password 확인해주세요")
+            location.reload();
+          }else if(data == "login true"){
+            location.href = '/keep';
+          }
+          else {
+            alert("잘못된 요청입니다.")
+            location.reload();
+          }
+        }
+      })
+    }
+  </script>
 </html>
-<!-- test2 -->
-<!-- test3 -->
-<!-- test3.1 -->

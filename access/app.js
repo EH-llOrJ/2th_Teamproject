@@ -6,12 +6,13 @@ const { sequelize, User } = require("./model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const session = require("express-session");
-
+const ejs = require("ejs");
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
-
 app.use(express.static(__dirname));
+app.set("view engine", "ejs");
+app.set("views", "./view");
 
 app.use(
   session({
@@ -24,22 +25,18 @@ app.use(
 sequelize
   .sync({ force: false })
   .then(() => {
-    console.log("DB 연결성공");
+    console.log("DB connected");
   })
   .catch((err) => {
     console.log(err);
   });
 
 app.get("/", (req, res) => {
-  fs.readFile("view/loginPage/login.html", "utf-8", (err, data) => {
-    res.send(data);
-  });
+  res.render("./loginPage/login");
 });
 
 app.get("/join", (req, res) => {
-  fs.readFile("view/joinPage/joinMember.html", "utf-8", (err, data) => {
-    res.send(data);
-  });
+  res.render("./joinPage/joinMember");
 });
 
 app.post("/emailCheck", (req, res) => {
@@ -71,15 +68,16 @@ app.post("/signUpPro", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  User.findOne({ where: { email: email } })
+  const { id, pw } = req.body;
+  User.findOne({ where: { email: id } })
     .then((e) => {
       if (e) {
-        bcrypt.compare(password, e?.password, (err, same) => {
+        bcrypt.compare(pw, e?.password, (err, same) => {
           if (same) {
             const accessToken = jwt.sign(
               {
-                email: email,
+                email: id,
+                name: e.name,
               },
               process.env.ACCESS_TOKEN,
               {
@@ -90,7 +88,7 @@ app.post("/login", (req, res) => {
 
             const refreshToken = jwt.sign(
               {
-                email: email,
+                email: id,
               },
               process.env.REFRESH_TOKEN,
               {
@@ -99,17 +97,17 @@ app.post("/login", (req, res) => {
               }
             );
 
-            User.update({ refresh: refreshToken }, { where: { email: email } });
+            User.update({ refresh: refreshToken }, { where: { email: id } });
 
             req.session.access_token = accessToken;
             req.session.refresh_token = refreshToken;
-            res.send({ access: accessToken, refresh: refreshToken });
+            res.send("login true");
           } else {
-            res.send("비밀번호를 확인해 주세요");
+            res.send("fail");
           }
         });
       } else {
-        res.send("해당 email이 없습니다. 다시 확인해주세요.");
+        res.send("fail");
       }
     })
     .catch((err) => {
@@ -127,7 +125,8 @@ const middleware = (req, res, next) => {
         process.env.REFRESH_TOKEN,
         (err, ref_decoded) => {
           if (err) {
-            res.send("refesh token이 만료되었습니다. 다시 로그인해주세요");
+            // res.send("refesh token이 만료되었습니다. 다시 로그인해주세요");
+            res.redirect("/");
           } else {
             User.findOne({ where: { email: ref_decoded.email } })
               .then((e) => {
@@ -135,6 +134,7 @@ const middleware = (req, res, next) => {
                   const accessToken = jwt.sign(
                     {
                       email: ref_decoded.email,
+                      name: ref_decoded.name,
                     },
                     process.env.ACCESS_TOKEN,
                     {
@@ -146,7 +146,7 @@ const middleware = (req, res, next) => {
                   req.session.access_token = accessToken;
                   next();
                 } else {
-                  res.send("다시 로그인해주세요");
+                  res.redirect("/");
                 }
               })
               .catch((err) => {
@@ -161,8 +161,20 @@ const middleware = (req, res, next) => {
   });
 };
 
-app.get("/check", middleware, (req, res) => {
-  res.send("로그인 되어있음");
+app.get("/keep", middleware, (req, res) => {
+  let email = jwt.verify(
+    req.session.access_token,
+    process.env.ACCESS_TOKEN,
+    (err, result) => {
+      return result.email;
+    }
+  );
+  User.findOne({ where: { email: email } }).then((e) => {
+    let name = e.name;
+    res.render("./loginPage/login(keep)", {
+      id: name,
+    });
+  });
 });
 
 app.listen(3000, () => {
