@@ -76,6 +76,7 @@ app.post("/findCheck", (req, res) => {
         {
           email: e.email,
           password: e.password,
+          name: e.name,
         },
         process.env.ACCESS_TOKEN,
         {
@@ -116,7 +117,7 @@ app.post("/login", (req, res) => {
               },
               process.env.ACCESS_TOKEN,
               {
-                expiresIn: "5s",
+                expiresIn: "5m",
                 issuer: "ksh",
               }
             );
@@ -228,10 +229,23 @@ app.get("/change", (req, res) => {
 });
 
 app.post("/passcha", (req, res) => {
-  const { password, user } = req.body;
-  User.update({ password: password }, { where: { email: user.email } }).then(
-    () => {
-      res.send("success");
+  const { passwordDom } = req.body;
+  jwt.verify(
+    req.session.access_token,
+    process.env.ACCESS_TOKEN,
+    (err, acc_decoded) => {
+      if (err) {
+        res.send("fail");
+      } else {
+        bcrypt.hash(passwordDom, 10).then((e) => {
+          User.update(
+            { password: e },
+            { where: { email: acc_decoded.email } }
+          ).then(() => {
+            res.send("success");
+          });
+        });
+      }
     }
   );
 });
