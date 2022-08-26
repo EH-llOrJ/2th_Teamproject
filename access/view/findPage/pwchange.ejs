@@ -53,8 +53,29 @@
           </button>
       </div>
       <script>
+      let passwordDom = document.querySelector('#password');
+      let password_a_Dom = document.querySelector('#password_a');
+
+      passwordDom.onkeyup = function(){
+            let val = passwordDom.value;
+            if(val == ""){
+                a = 0;
+            }else{
+                a = 1
+            }
+        }
+        password_a_Dom.onkeyup = function(){
+            let val = password_a_Dom.value;
+            if(val == ""){
+                b = 0;
+            }else{
+                b = 1
+            }
+        }
+
+
           //비밀번호 정규식
-          document.querySelector("#password").onkeyup = function () {
+          passwordDom.onkeyup = function () {
         let password = this.value;
         let passwordreg =
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/g;
@@ -76,8 +97,9 @@
           console.log(b);
         }
       };
+
       //비밀번호 확인 정규식
-      document.querySelector("#password_a").onkeyup = function () {
+      password_a_Dom.onkeyup = function () {
         let password_a = this.value;
         //정규식 Pass
         if (password_a == password.value) {
@@ -98,19 +120,19 @@
         }
       };
 
-      let password = document.querySelector('#password');
-
       $.ajax({
         url: '/passcha',
         type: 'post',
         data: {
           user: result,
-          password: password.value,
+          password: passwordDom.value,
         },
         success: function(data){
           if(data === 'success') {
             alert('비밀번호가 변경되었으니 로그인해 주시기 바랍니다.')
             window.close();
+          }else{
+            alert('비밀번호를 다시 입력해주세요')
           }
         }
       })
