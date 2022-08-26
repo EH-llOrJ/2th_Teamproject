@@ -39,6 +39,10 @@ app.get("/join", (req, res) => {
   res.render("./joinPage/joinMember");
 });
 
+app.get("/find", (req, res) => {
+  res.render("./findPage/find");
+});
+
 app.post("/emailCheck", (req, res) => {
   const { email } = req.body;
   User.findOne({ where: { email: email } })
@@ -52,6 +56,37 @@ app.post("/emailCheck", (req, res) => {
     .catch((err) => {
       res.send(err);
     });
+});
+
+app.post("/findCheck", (req, res) => {
+  const { email, name, phone, birth } = req.body;
+
+  User.findOne({
+    where: {
+      email: email,
+      name: name,
+      phone: phone,
+      birth: birth,
+    },
+  }).then((e) => {
+    if (e === null) {
+      res.send("fail");
+    } else {
+      const accessToken = jwt.sign(
+        {
+          email: e.email,
+          password: e.password,
+        },
+        process.env.ACCESS_TOKEN,
+        {
+          expiresIn: "5s",
+          issuer: "ksh",
+        }
+      );
+      req.session.access_token = accessToken;
+      res.send("success");
+    }
+  });
 });
 
 app.post("/signUpPro", (req, res) => {
@@ -92,7 +127,7 @@ app.post("/login", (req, res) => {
               },
               process.env.REFRESH_TOKEN,
               {
-                expiresIn: "10s",
+                expiresIn: "5m",
                 issuer: "ksh",
               }
             );
@@ -175,6 +210,30 @@ app.get("/keep", middleware, (req, res) => {
       id: name,
     });
   });
+});
+
+app.get("/change", (req, res) => {
+  let result = jwt.verify(
+    req.session.access_token,
+    process.env.ACCESS_TOKEN,
+    (err, acc_decoded) => {
+      if (err) {
+        res.redirect("/find");
+      } else {
+        return acc_decoded;
+      }
+    }
+  );
+  res.render("./findPage/pwchange", { result: result });
+});
+
+app.post("/passcha", (req, res) => {
+  const { password, user } = req.body;
+  User.update({ password: password }, { where: { email: user.email } }).then(
+    () => {
+      res.send("success");
+    }
+  );
 });
 
 app.listen(3000, () => {

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>비밀번호찾기</title>
+    <link rel="stylesheet" href="view/findPage/find.css">
+    <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="form-sign-in-container">
+        <div id="join_title">
+        <h1>비밀번호찾기</h1>
+        </div>
+          <!-- 이메일 -->
+        <div class="content">
+        <input type="email" placeholder="이메일" id="id" name="email" class="id" maxlength="30" />
+        </div>
+          <!-- 이름 -->
+          <div class="content">
+          <input
+            type="text"
+            placeholder="이름"
+            id="name"
+            name="name"
+            class="id"
+            maxlength="10"
+          />
+          </div>
+          <!-- 연락처 -->
+          <div class="content">
+          <input
+            type="text"
+            placeholder="연락처(- 없이 입력)"
+            id="phoneNum"
+            name="phone"
+            class="phoneNum"
+            maxlength="20"
+          />
+          </div>
+          <!-- 생년월일 -->
+          <div class="content">
+            <span class="birthName">생년월일</span>
+          <input
+            type="date"
+            id="birth"
+            name="birth"
+            class="birth"
+          />
+          </div>
+          <!-- 비밀번호 재설정 button -->
+          <button
+            type="submit"
+            class="btn"
+            disabled="disabled"
+          >
+            비밀번호 재설정
+          </button>
+          <div class="content borderClear">
+          <a class="idFind" href="">이메일을 잊어버리셨다면 이 페이지로 이동해주세요.</a>
+          </div>
+      </div>
+      <script>
+        let email = document.querySelector('#id');
+        let name = document.querySelector('#name');
+        let phone = document.querySelector('.phoneNum');
+        let birth = document.querySelector('.birth');
+
+        let a = 0;
+        let b = 0;
+        let c = 0;
+
+        email.onkeyup = function(){
+            let val = email.value;
+            if(val == ""){
+                a = 0;
+            }else{
+                a = 1
+            }
+        }
+        name.onkeyup = function(){
+            let val = name.value;
+            if(val == ""){
+                b = 0;
+            }else{
+                b = 1
+            }
+        }
+        phone.onkeyup = function(){
+            let val = phone.value;
+            if(val == ""){
+                c = 0;
+            }else{
+                c = 1
+            }
+        }
+
+        window.onkeyup = function(){
+        if(a == 1 && b == 1 && c == 1) {
+            document.querySelector('.btn').disabled = false;
+        }else{
+            document.querySelector('.btn').disabled = true;
+        }
+    }
+
+        document.querySelector('.btn').onclick = function(e){
+        $.ajax({
+            url: '/findCheck',
+            type: 'post',
+            data: {
+                email : email.value,
+                name : name.value,
+                phone : phone.value,
+                birth : birth.value,
+            },
+            success: function(data){
+                if(data == 'fail') {
+                    alert('회원정보를 다시 확인해주세요');
+                }else if(data == 'success'){
+                    alert('비밀번호를 재설정 해주세요.')
+                    location.href = '/change';
+                }
+            }
+        })
+    }
+      </script>
+  </body>
+</html>
