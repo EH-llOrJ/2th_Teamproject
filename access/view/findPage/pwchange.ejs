@@ -54,12 +54,14 @@
       </div>
       <script>
 
+        // 버튼 활성화 조건 생성
         let a = 0;
         let b = 0;
 
       let passwordDom = document.querySelector('#password');
       let password_a_Dom = document.querySelector('#password_a');
 
+      // 비밀번호 값 입력
       passwordDom.onkeyup = function(){
             let val = passwordDom.value;
             if(val == ""){
@@ -68,6 +70,7 @@
                 a = 1
             }
         }
+        // 비밀번호확인 값 입력
         password_a_Dom.onkeyup = function(){
             let val = password_a_Dom.value;
             if(val == ""){
@@ -124,6 +127,7 @@
         }
       };
 
+      // 모든 조건 입력 시 버튼 활성화
       window.onkeyup = function(){
         if(a == 1 && b == 1) {
             document.querySelector('.btn').disabled = false;
@@ -132,6 +136,7 @@
         }
     }
 
+    // 버튼 클릭 시 서버에 값 전송
       document.querySelector('.btn').onclick = function(e){
       $.ajax({
         url: '/passcha',

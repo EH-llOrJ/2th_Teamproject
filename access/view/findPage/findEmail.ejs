@@ -65,9 +65,11 @@
         let phone = document.querySelector('.phoneNum');
         let birth = document.querySelector('.birth');
 
+        // 버튼 활성화 조건 생성
         let b = 0;
         let c = 0;
 
+        // 이름 입력 시
         name.onkeyup = function(){
             let val = name.value;
             if(val == ""){
@@ -76,6 +78,7 @@
                 b = 1
             }
         }
+        // 핸드폰 입력 시
         phone.onkeyup = function(){
             let val = phone.value;
             if(val == ""){
@@ -84,7 +87,8 @@
                 c = 1
             }
         }
-
+         
+        // 모든 조건 입력 시 버튼 활성화
         window.onkeyup = function(){
         if(b == 1 && c == 1) {
             document.querySelector('.btn').disabled = false;
@@ -93,6 +97,7 @@
         }
     }
 
+        // 버튼 클릭 시 서버에 값 전송
         document.querySelector('.btn').onclick = function(e){
         $.ajax({
             url: '/checkPerson',
