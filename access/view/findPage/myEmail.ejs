@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>이메일보기</title>
+    <link rel="stylesheet" href="view/findPage/find.css">
+    <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="form-sign-in-container">
+        <div id="join_title">
+        <h2><%=result.name %>님의 이메일</h2>
+        </div>
+          <!-- 이름 -->
+          <div class="content">
+            <%=result.email %>
+          </div>
+          <!-- 비밀번호 재설정 button -->
+          <button
+            type="submit"
+            class="btn"
+          >
+            로그인하러 가기
+          </button>
+      </div>
+  </body>
+  <script>
+    document.querySelector('.btn').onclick = function(e) {
+      window.close();
+    }
+  </script>
+</html>

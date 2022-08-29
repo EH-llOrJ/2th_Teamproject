@@ -43,6 +43,10 @@ app.get("/find", (req, res) => {
   res.render("./findPage/find");
 });
 
+app.get("/findEmail", (req, res) => {
+  res.render("./findPage/findEmail");
+});
+
 app.post("/emailCheck", (req, res) => {
   const { email } = req.body;
   User.findOne({ where: { email: email } })
@@ -80,7 +84,7 @@ app.post("/findCheck", (req, res) => {
         },
         process.env.ACCESS_TOKEN,
         {
-          expiresIn: "5s",
+          expiresIn: "5m",
           issuer: "ksh",
         }
       );
@@ -174,7 +178,7 @@ const middleware = (req, res, next) => {
                     },
                     process.env.ACCESS_TOKEN,
                     {
-                      expiresIn: "5s",
+                      expiresIn: "5m",
                       issuer: "ksh",
                     }
                   );
@@ -228,6 +232,21 @@ app.get("/change", (req, res) => {
   res.render("./findPage/pwchange", { result: result });
 });
 
+app.get("/viewEmail", (req, res) => {
+  let result = jwt.verify(
+    req.session.access_token,
+    process.env.ACCESS_TOKEN,
+    (err, acc_decoded) => {
+      if (err) {
+        res.redirect("/findEmail");
+      } else {
+        return acc_decoded;
+      }
+    }
+  );
+  res.render("./findPage/myEmail", { result: result });
+});
+
 app.post("/passcha", (req, res) => {
   const { passwordDom } = req.body;
   jwt.verify(
@@ -248,6 +267,38 @@ app.post("/passcha", (req, res) => {
       }
     }
   );
+});
+
+app.post("/checkPerson", (req, res) => {
+  const { name, phone, birth } = req.body;
+
+  User.findOne({
+    where: {
+      name: name,
+      phone: phone,
+      birth: birth,
+    },
+  }).then((e) => {
+    if (e == null) {
+      res.send("fail");
+    } else {
+      const accessToken = jwt.sign(
+        {
+          email: e.email,
+          name: e.name,
+        },
+        process.env.ACCESS_TOKEN,
+        {
+          expiresIn: "5m",
+          issuer: "ksh",
+        }
+      );
+
+      req.session.access_token = accessToken;
+
+      res.send("success");
+    }
+  });
 });
 
 app.listen(3000, () => {

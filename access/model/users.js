@@ -29,6 +29,7 @@ class User extends Sequelize.Model {
         refresh: {
           type: Sequelize.STRING(255),
           allowNull: true,
+          unique: true,
         },
       },
       {

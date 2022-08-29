@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>비밀번호찾기</title>
+    <title>이메일찾기</title>
     <link rel="stylesheet" href="view/findPage/find.css">
     <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <!-- <script
@@ -17,11 +17,7 @@
     <div class="container">
       <div class="form-sign-in-container">
         <div id="join_title">
-        <h1>비밀번호찾기</h1>
-        </div>
-          <!-- 이메일 -->
-        <div class="content">
-        <input type="email" placeholder="이메일" id="id" name="email" class="id" maxlength="30" />
+        <h1>이메일찾기</h1>
         </div>
           <!-- 이름 -->
           <div class="content">
@@ -61,30 +57,17 @@
             class="btn"
             disabled="disabled"
           >
-            비밀번호 재설정
+            내 이메일 보기
           </button>
-          <div class="content borderClear">
-          <a class="idFind" href="/findEmail">이메일을 잊어버리셨다면 이 페이지로 이동해주세요.</a>
-          </div>
       </div>
       <script>
-        let email = document.querySelector('#id');
         let name = document.querySelector('#name');
         let phone = document.querySelector('.phoneNum');
         let birth = document.querySelector('.birth');
 
-        let a = 0;
         let b = 0;
         let c = 0;
 
-        email.onkeyup = function(){
-            let val = email.value;
-            if(val == ""){
-                a = 0;
-            }else{
-                a = 1
-            }
-        }
         name.onkeyup = function(){
             let val = name.value;
             if(val == ""){
@@ -103,7 +86,7 @@
         }
 
         window.onkeyup = function(){
-        if(a == 1 && b == 1 && c == 1) {
+        if(b == 1 && c == 1) {
             document.querySelector('.btn').disabled = false;
         }else{
             document.querySelector('.btn').disabled = true;
@@ -112,10 +95,9 @@
 
         document.querySelector('.btn').onclick = function(e){
         $.ajax({
-            url: '/findCheck',
+            url: '/checkPerson',
             type: 'post',
             data: {
-                email : email.value,
                 name : name.value,
                 phone : phone.value,
                 birth : birth.value,
@@ -124,8 +106,7 @@
                 if(data == 'fail') {
                     alert('회원정보를 다시 확인해주세요');
                 }else if(data == 'success'){
-                    alert('비밀번호를 재설정 해주세요.')
-                    location.href = '/change';
+                    location.href = '/viewEmail';
                 }
             }
         })
