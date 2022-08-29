@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const session = require("express-session");
 const ejs = require("ejs");
 const app = express();
+const { Op } = require("sequelize");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname));
@@ -197,14 +198,24 @@ app.post("/emailCheck", (req, res) => {
 // (2), 회원정보를 받고 table에 DB생성
 app.post("/signUpPro", (req, res) => {
   const { email, password, name, phone, birth } = req.body;
-  bcrypt.hash(password, 10).then((e) => {
-    User.create({
-      email: email,
-      password: e,
-      name: name,
-      phone: phone,
-      birth: birth,
-    });
+
+  // phone은 unique 속성으로 db에 유무 검사 후 저장
+  User.findOne({ where: { phone: phone } }).then((e) => {
+    if (e === null) {
+      res.send("success");
+      // pw 암호화 하여 저장
+      bcrypt.hash(password, 10).then((e) => {
+        User.create({
+          email: email,
+          password: e,
+          name: name,
+          phone: phone,
+          birth: birth,
+        });
+      });
+    } else {
+      res.send("phone");
+    }
   });
 });
 

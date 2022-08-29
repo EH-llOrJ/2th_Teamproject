@@ -19,8 +19,8 @@
         <div id="join_title">
         <h1>회원가입</h1>
         </div>
-        <!-- form 태그 값 서버로 전송 -->
-        <form action="/signUpPro" method="post">
+        <!-- form 태그 값 서버로 전송
+        <form action="/signUpPro" method="post"> -->
           <!-- 이메일 -->
         <div class="content">
         <input type="email" placeholder="이메일" id="id" name="email" class="id" maxlength="30" />
@@ -100,7 +100,7 @@
           >
             회원가입 완료
           </button>
-        </form>
+        <!-- </form> -->
       </div>
 
     <script>
@@ -285,12 +285,36 @@
           document.querySelector(".btn").disabled = true;
         }
       };
-      //버튼 click시 
+
+      
       document.querySelector(".btn").onclick = function () {
-        alert("회원 가입을 축하합니다.");
-        window.location.reload();
-      };
-      // 내일 물어볼 것 : 패스워드 정규식은 왜 전역변수로 선언시 에러가 발생하는가 여기서 콜백을 써서 동기처리로 하는 방법
+        
+      let email = document.querySelector('#id');
+      let password = document.querySelector('#password');
+      let name = document.querySelector('#name');
+      let phone = document.querySelector('#phoneNum');
+      let birth = document.querySelector('#birth');
+
+      $.ajax({
+        url: '/signUpPro',
+        type: 'post',
+        data: {
+          email: email.value,
+          password: password.value,
+          name: name.value,
+          phone: phone.value,
+          birth: birth.value,
+        },
+        success: function(data) {
+          if(data === 'success'){
+           alert("회원 가입을 축하합니다.");
+           window.location.reload();         
+          }else if(data === 'phone') {
+            alert('이미 존재하는 핸드폰 입니다.');
+          }
+        }
+      })
+    }
     </script>
   </body>
 </html>
