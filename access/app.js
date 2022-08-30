@@ -8,6 +8,7 @@ const session = require("express-session");
 const ejs = require("ejs");
 const app = express();
 const { Op } = require("sequelize");
+const { fstat } = require("fs");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname));
@@ -33,10 +34,14 @@ sequelize
     console.log(err);
   });
 
+app.get("/", (req, res) => {
+  res.render("./startPage/start");
+});
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 // 로그인 페이지 = (1)
-app.get("/", (req, res) => {
+app.get("/log", (req, res) => {
   res.render("./loginPage/login");
 });
 
@@ -134,7 +139,7 @@ const middleware = (req, res, next) => {
                   next();
                 } else {
                   // tok 전부 만료되어 다시 로그인
-                  res.redirect("/");
+                  res.redirect("/log");
                 }
               })
               .catch((err) => {
