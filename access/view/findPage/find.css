@@ -1,0 +1,115 @@
+* {
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0;
+}
+
+h1 {
+  font-family: "Nanum Gothic Coding", monospace;
+}
+
+#join_title {
+  letter-spacing: 15px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.form-sign-in-container {
+  margin: 0 auto;
+  max-width: 400px;
+  vertical-align: middle;
+}
+
+.content {
+  display: flex;
+  margin: 15px auto 0px auto;
+  border: solid 1px #dadada;
+  position: relative;
+  border-radius: 5px;
+}
+
+.id {
+  justify-content: space-between;
+  border: none;
+  outline: none;
+  position: relative;
+  text-align: start;
+  font-size: 13px;
+  font-weight: 1000;
+  width: 70%;
+  height: 51px;
+  padding: 10px 14px 10px 14px;
+  vertical-align: top;
+}
+
+.phoneNum {
+  justify-content: space-between;
+  border: none;
+  outline: none;
+  position: relative;
+  text-align: start;
+  font-size: 13px;
+  font-weight: 1000;
+  width: 50%;
+  height: 51px;
+  padding: 10px 14px 10px 14px;
+  vertical-align: top;
+}
+
+.birth {
+  justify-content: space-between;
+  border: none;
+  outline: none;
+  position: relative;
+  text-align: end;
+  font-size: 13px;
+  font-weight: 600;
+  width: 50%;
+  height: 51px;
+  padding: 10px 14px 10px 14px;
+  vertical-align: top;
+  color: #726d6d;
+}
+
+.birthName {
+  text-align: start;
+  width: 50%;
+  height: 51px;
+  padding: 17px 14px 10px 14px;
+  font-size: 14px;
+  font-weight: 1000;
+  color: #726d6d;
+}
+
+.btn {
+  font-size: 15px;
+  margin-top: 30px;
+  background-color: rgba(9, 49, 226, 0.712);
+  color: beige;
+  border-radius: 5px;
+  width: 50%;
+  height: 50px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.borderClear {
+  border: 0;
+}
+
+.idFind {
+  margin: 0 auto;
+  font-size: 13px;
+  font-weight: bolder;
+}
+.mar-top {
+  margin-top: 30px;
+}
+.emailcheck {
+  color: rgb(243, 114, 114);
+  font-size: 12px;
+  font-weight: 900;
+}
+.textStart {
+  text-align: start;
+}

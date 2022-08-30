@@ -14,76 +14,34 @@ body {
   width: 100%;
   height: 100%;
   background-color: black;
+}
+
+#container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.img {
+  width: 75%;
+  height: 100%;
+  background: black;
+  background: radial-gradient(circle at 50% 50%, black 82%, rgb(155, 2, 2));
   position: relative;
 }
 
-canvas {
-  width: 100%;
-  height: 100%;
-}
-
-#pageMove {
-  text-decoration: none;
-  width: 300px;
-  height: 100px;
-  color: white;
+.findImg {
+  width: 90%;
+  height: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   position: absolute;
-  left: 40%;
-  top: 60%;
-  font-size: 25px;
-  font-weight: 800;
+  border-radius: 15%;
 }
 
-#pageMove:hover {
-  transition: 0.5s;
-  transform: scale(1.1);
-}
-
-/* loginBtn */
-#workarea {
-  position: absolute;
-  width: 100%;
+.startContent {
+  width: 25%;
   height: 100%;
   background-color: black;
-  font-family: Raleway;
-}
-
-.spot {
-  position: absolute;
-  width: 100%;
-  height: 65%;
-  top: 35%;
-  left: 0;
-}
-
-.svg-wrapper {
-  margin-top: 0;
-  position: relative;
-  width: 300px;
-  height: 100px;
-  display: inline-block;
-  border-radius: 3px;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-#shape {
-  stroke-width: 2px;
-  fill: transparent;
-  stroke: #887f03;
-  stroke-dasharray: 130 800;
-  stroke-dashoffset: -485;
-  transition: 0.8s all ease;
-}
-
-#text {
-  margin-top: 0px;
-  text-align: center;
-}
-
-.svg-wrapper:hover #shape {
-  stroke-dasharray: 50 0;
-  stroke-width: 3px;
-  stroke-dashoffset: 0;
-  stroke: #faf607;
 }

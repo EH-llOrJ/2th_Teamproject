@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>비밀번호재설정</title>
+    <link rel="stylesheet" href="view/findPage/find.css">
+    <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="form-sign-in-container">
+        <div id="join_title">
+        <h1>비밀번호재설정</h1>
+        </div>
+        <div class="content mar-top">
+          <input
+            type="password"
+            placeholder="비밀번호"
+            id="password"
+            name="password"
+            class="id"
+            maxlength="20"
+          />
+          </div>
+          <!-- 비밀번호 정규식에 맞게 작성되었는지 check -->
+          <div class="passwordcheck emailcheck textStart"></div>
+            <!-- 비밀번호 확인 -->
+          <div class="content">
+          <input
+            type="password"
+            placeholder="비밀번호 확인"
+            id="password_a"
+            name="cpassword"
+            class="id"
+            maxlength="20"
+          />
+          </div>
+          <!-- 비밀번호 확인 정규식에 맞게 작성되었는지 check -->
+          <div class="passwordre emailcheck textStart"></div>
+          <button
+            type="submit"
+            class="btn"
+            disabled="disabled"
+          >
+            <%=result.name %> 님의 비밀번호 재설정
+          </button>
+      </div>
+      <script>
+
+        // 버튼 활성화 조건 생성
+        let a = 0;
+        let b = 0;
+
+      let passwordDom = document.querySelector('#password');
+      let password_a_Dom = document.querySelector('#password_a');
+
+      // 비밀번호 값 입력
+      passwordDom.onkeyup = function(){
+            let val = passwordDom.value;
+            if(val == ""){
+                a = 0;
+            }else{
+                a = 1
+            }
+        }
+        // 비밀번호확인 값 입력
+        password_a_Dom.onkeyup = function(){
+            let val = password_a_Dom.value;
+            if(val == ""){
+                b = 0;
+            }else{
+                b = 1
+            }
+        }
+
+
+          //비밀번호 정규식
+          passwordDom.onkeyup = function () {
+        let password = this.value;
+        let passwordreg =
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/g;
+        //정규식 Pass
+        if (passwordreg.test(password)) {
+          document.querySelector(".passwordcheck").innerHTML = "";
+          a = 1;
+          console.log(a);
+        //정규식 fail
+        } else if (password == "") {
+          document.querySelector(".passwordcheck").innerHTML = "";
+          a = 0;
+          console.log(a);
+        //정규식 fail
+        } else {
+          document.querySelector(".passwordcheck").innerHTML =
+            "1개이상의 특수문자 대문자 소문자 숫자를 입력하세요";
+          a = 0;
+          console.log(a);
+        }
+      };
+
+      //비밀번호 확인 정규식
+      password_a_Dom.onkeyup = function () {
+        let password_a = this.value;
+        //정규식 Pass
+        if (password_a == password.value) {
+          document.querySelector(".passwordre").innerHTML = "";
+          b = 1;
+          console.log(b);
+        //정규식 fail
+        } else if (password_a == "") {
+          document.querySelector(".passwordre").innerHTML = "";
+          b = 0;
+          console.log(b);
+        //정규식 fail
+        } else {
+          document.querySelector(".passwordre").innerHTML =
+            "패스워드가 동일하지 않습니다.";
+          b = 0;
+          console.log(b);
+        }
+      };
+
+      // 모든 조건 입력 시 버튼 활성화
+      window.onkeyup = function(){
+        if(a == 1 && b == 1) {
+            document.querySelector('.btn').disabled = false;
+        }else{
+            document.querySelector('.btn').disabled = true;
+        }
+    }
+
+    // 버튼 클릭 시 서버에 값 전송
+      document.querySelector('.btn').onclick = function(e){
+      $.ajax({
+        url: '/passcha',
+        type: 'post',
+        data: {
+          passwordDom: passwordDom.value,
+        },
+        success: function(data){
+          if(data == 'success') {
+            alert('비밀번호가 변경되었으니 로그인해 주시기 바랍니다.')
+            location.reload();
+          }else if(data == 'fail'){
+            alert('토큰이 만료되었으니 정보를 다시 입력해주세요')
+            location.href = '/find'
+          }else{
+            alert('다시 시작해주세요')
+          }
+        }
+      })
+    }
+      </script>
+  </body>
+</html>
