@@ -4,27 +4,33 @@ class User extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
+        user_id: {
+          type: Sequelize.STRING(100),
+          allowNull: false,
+          unique: true,
+        },
         email: {
           type: Sequelize.STRING(100),
           allowNull: false,
           unique: true,
         },
-        password: {
-          type: Sequelize.STRING(255),
+        nick: {
+          type: Sequelize.STRING(100),
           allowNull: false,
+          unique: true,
         },
         name: {
           type: Sequelize.STRING(20),
+          allowNull: false,
+        },
+        password: {
+          type: Sequelize.STRING(255),
           allowNull: false,
         },
         phone: {
           type: Sequelize.STRING(72),
           allowNull: false,
           unique: true,
-        },
-        birth: {
-          type: Sequelize.STRING(72),
-          allowNull: false,
         },
         refresh: {
           type: Sequelize.STRING(255),

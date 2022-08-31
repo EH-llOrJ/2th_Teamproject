@@ -48,7 +48,7 @@ app.get("/log", (req, res) => {
 // (1), 로그인 시 id,pw 확인하여 (acc_tok , ref_tok) 발급
 app.post("/login", (req, res) => {
   const { id, pw } = req.body;
-  User.findOne({ where: { email: id } })
+  User.findOne({ where: { user_id: id } })
     .then((e) => {
       // 이메일로 받은 값이 가입된 회원일 경우 암호화된 비밀번호 비교
       if (e) {
@@ -57,7 +57,7 @@ app.post("/login", (req, res) => {
           if (same) {
             const accessToken = jwt.sign(
               {
-                email: id,
+                user_id: id,
                 name: e.name,
               },
               process.env.ACCESS_TOKEN,
@@ -69,7 +69,7 @@ app.post("/login", (req, res) => {
 
             const refreshToken = jwt.sign(
               {
-                email: id,
+                user_id: id,
               },
               process.env.REFRESH_TOKEN,
               {
@@ -79,7 +79,7 @@ app.post("/login", (req, res) => {
             );
 
             // ref_tok를 확인해서 acc_tok 재발급하기 위해 db에 추가
-            User.update({ refresh: refreshToken }, { where: { email: id } });
+            User.update({ refresh: refreshToken }, { where: { user_id: id } });
 
             // session에 발급된 토큰 저장
             req.session.access_token = accessToken;
@@ -119,12 +119,12 @@ const middleware = (req, res, next) => {
             res.redirect("/");
           } else {
             // ref_tok 존재하여 해당 email 찾아 acc_tok 재발급
-            User.findOne({ where: { email: ref_decoded.email } })
+            User.findOne({ where: { user_id: ref_decoded.user_id } })
               .then((e) => {
                 if (e?.refresh == refresh_token) {
                   const accessToken = jwt.sign(
                     {
-                      email: ref_decoded.email,
+                      user_id: ref_decoded.user_id,
                       name: ref_decoded.name,
                     },
                     process.env.ACCESS_TOKEN,
@@ -158,15 +158,15 @@ const middleware = (req, res, next) => {
 // (1), acc_tok 확인하여 로그인 유지 (middleware 수행)
 app.get("/keep", middleware, (req, res) => {
   // acc_tok 검증하여 해당 email 변수 담기
-  let email = jwt.verify(
+  let user_id = jwt.verify(
     req.session.access_token,
     process.env.ACCESS_TOKEN,
     (err, result) => {
-      return result.email;
+      return result.user_id;
     }
   );
   // 담은 변수를 render page에 정보 보내기
-  User.findOne({ where: { email: email } }).then((e) => {
+  User.findOne({ where: { user_id: user_id } }).then((e) => {
     let name = e.name;
     res.render("./loginPage/login(keep)", {
       id: name,
@@ -181,15 +181,33 @@ app.get("/join", (req, res) => {
   res.render("./joinPage/joinMember");
 });
 
-// (2), 이메일 중복확인 >> 이메일값 받고 해당 이메일 유무 확인후 값 반환
-app.post("/emailCheck", (req, res) => {
-  const { email } = req.body;
-  User.findOne({ where: { email: email } })
+// (2), 아이디 중복확인 >> 아이디값 받고 해당 아이디 유무 확인후 값 반환
+app.post("/userIdCheck", (req, res) => {
+  const { user_id } = req.body;
+  User.findOne({ where: { user_id: user_id } })
     .then((e) => {
-      // 가입된 이메일 없을때
+      // 가입된 아이디 없을때
       if (e === null) {
         res.send("usable");
-        // 가입된 이메일 있을때
+        // 가입된 아이디 있을때
+      } else {
+        res.send("disusable");
+      }
+    })
+    // findOne 실행 안될때
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+app.post("/nickCheck", (req, res) => {
+  const { nickName } = req.body;
+  User.findOne({ where: { nick: nickName } })
+    .then((e) => {
+      // 가입된 아이디 없을때
+      if (e === null) {
+        res.send("usable");
+        // 가입된 아이디 있을때
       } else {
         res.send("disusable");
       }
@@ -202,7 +220,7 @@ app.post("/emailCheck", (req, res) => {
 
 // (2), 회원정보를 받고 table에 DB생성
 app.post("/signUpPro", (req, res) => {
-  const { email, password, name, phone, birth } = req.body;
+  const { user_id, email, nick, password, name, phone } = req.body;
 
   // phone은 unique 속성으로 db에 유무 검사 후 저장
   User.findOne({ where: { phone: phone } }).then((e) => {
@@ -211,11 +229,12 @@ app.post("/signUpPro", (req, res) => {
       // pw 암호화 하여 저장
       bcrypt.hash(password, 10).then((e) => {
         User.create({
+          user_id: user_id,
           email: email,
+          nick: nick,
           password: e,
           name: name,
           phone: phone,
-          birth: birth,
         });
       });
     } else {
@@ -226,21 +245,21 @@ app.post("/signUpPro", (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// 비밀번호&이메일찾기 페이지 = (3)
+// 비밀번호 & 아이디 찾기 페이지 = (3)
 app.get("/find", (req, res) => {
   res.render("./findPage/find");
 });
 
 // (3), 회원가입 유무 확인하여 토큰 발급 및 값 반환
 app.post("/findCheck", (req, res) => {
-  const { email, name, phone, birth } = req.body;
+  const { user_id, email, name, phone } = req.body;
 
   User.findOne({
     where: {
+      user_id: user_id,
       email: email,
       name: name,
       phone: phone,
-      birth: birth,
     },
   }).then((e) => {
     // 가입이 확인되지 않을때
@@ -317,13 +336,13 @@ app.get("/findEmail", (req, res) => {
 
 // (3-1), 내 이메일보기 페이지 유지하기 위해 토큰 발급 및 값 반환
 app.post("/checkPerson", (req, res) => {
-  const { name, phone, birth } = req.body;
+  const { email, name, phone } = req.body;
 
   User.findOne({
     where: {
+      email: email,
       name: name,
       phone: phone,
-      birth: birth,
     },
   }).then((e) => {
     if (e == null) {
@@ -333,6 +352,7 @@ app.post("/checkPerson", (req, res) => {
       // 회원일 경우 토큰 발급
       const accessToken = jwt.sign(
         {
+          user_id: e.user_id,
           email: e.email,
           name: e.name,
         },
