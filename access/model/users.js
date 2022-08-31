@@ -12,7 +12,6 @@ class User extends Sequelize.Model {
         email: {
           type: Sequelize.STRING(100),
           allowNull: false,
-          unique: true,
         },
         nick: {
           type: Sequelize.STRING(100),
