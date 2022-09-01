@@ -2,6 +2,9 @@
 
 .env 파일 작성 목록
 DB_PASSWORD
+
 SESSION_KEY
+
 ACCESS_TOKEN
+
 REFRESH_TOKEN
