@@ -75,54 +75,24 @@
         <div class="log_btn1">
           <div class="log_btn-outline">
             <button class="log_btn2" onclick="login()">LOGIN</button>
-          </div>
-          <!-- <div class="log_btn-outline">
-            <button class="logout_btn">로그아웃</button>
-          </div> -->
-        </div>
-        <!-- loogin content4 -->
-      </div>
-      <!-- <form action="/check" method="get">
-        <button>check</button>
-      </form> -->
-      <!-- ranking 화면 구성할 div 생성 -->
-      <div id="logBodyRight">
-        <div class="right_top">
-          <div class="right_top_content">
-            <div class="img_king">
-              <img class="img_king" src="/image/king.png" alt="" />
-            </div>
-            <h1 class="material-symbols-outlined">Ranking</h1>
-          </div>
-        </div>
-        <div class="right_main">
-          <div class="right_main_content">
-            <div class="option">
-              <h3>Rank</h3>
-              <h3>ID</h3>
-              <h3>Point</h3>
-            </div>
-            <div class="main1">
-              <div class="img_md">
-              <img class="img_md" src="/image/gold.png" alt="">
-              </div>
-            </div>
-            <div class="main1">
-              <div class="img_md">
-              <img class="img_md" src="/image/silver.png" alt="">
-              </div>
-            </div>
-            <div class="main1">
-              <div class="img_md">
-              <img class="img_md" src="/image/bronz.png" alt="">
-              </div>
-            </div>
+          </div>          
         </div>
       </div>
-      <div class="right_bottom color">
-          <h2 class="right_bottom_content material-symbols-outlined">Great!</h2>
+      <!-- 오른쪽 화면단 -->
+      <div class="right-basic">
+        <div id="right-header">게시판</div>
+        <div class="hr-line"></div>
+        <div>
+          <div class="right-date-content" id="writing-time">작성시간</div>
+          <div class="right-date-content" id="nickname">닉네임</div>
+          <div class="right-date-content" id="right-date-title">제목</div>
+          <div class="right-date-content">댓글수</div>
+          <div class="right-date-content" id="click-views">조회수</div>
+          <!-- <div class="right-date-content">추천수</div> -->
         </div>
-    </div>
+        <button id="right-clickbtn">글쓰기</button>
+
+      </div>
   </body>
   <script type="module" src="view/loginPage/app.js"></script>
   <script>
