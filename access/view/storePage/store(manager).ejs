@@ -147,9 +147,17 @@
         background-color: rgba(178, 0, 0, 0.9);
         transition: 0.2s;
       }
+      .text-red {
+        font-size: 20px;
+        color: rgba(178, 0, 0, 0.9);
+      }
+      .flex {
+        margin-top: 10px;
+        width: 70%;
+        display: flex;
+        justify-content: space-between;
+      }
     </style>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
     <header>
@@ -157,22 +165,17 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-8 col-md-7 py-4 al-center">
-              <h4 class="text-white">로그인 하시겠습니까?</h4>
+              <h4 class="text-white">즐거운 쇼핑 되세요.</h4>
               <!-- <p class="text-muted">
               </p> -->
             </div>
             <div class="col-sm-4 offset-md-1 py-4">
-              <h4 class="text-white">Login</h4>
-              <ul class="list-unstyled mar_b">
-                <input type="text" placeholder="User ID" />
-                <input type="password" placeholder="Password" />
-                <button
-                  class="storeLogin"
-                  onclick="location.href = '/storeKeep'"
-                >
-                  로그인
-                </button>
-              </ul>
+              <h4 class="text-white">??? 님 현재 보유 코인</h4>
+              <h5 class="text-white">100 coin</h5>
+              <div class="flex">
+                <a href="" class="text-red">coin 충전</a>
+                <a href="/store" class="text-red">Logout</a>
+              </div>
             </div>
           </div>
         </div>
@@ -251,12 +254,16 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c" />
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    로그인 해주세요.
+                    Thumbnail
                   </text>
                 </svg>
 
                 <div class="card-body">
-                  <p class="card-text">제품 설명</p>
+                  <p class="card-text">
+                    This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This content is a little bit
+                    longer.
+                  </p>
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
@@ -267,8 +274,14 @@
                       >
                         View
                       </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Edit
+                      </button>
                     </div>
-                    <small class="text-muted">??? coin</small>
+                    <small class="text-muted">9 mins</small>
                   </div>
                 </div>
               </div>
@@ -288,12 +301,16 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c" />
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    로그인 해주세요.
+                    Thumbnail
                   </text>
                 </svg>
 
                 <div class="card-body">
-                  <p class="card-text">제품 설명</p>
+                  <p class="card-text">
+                    This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This content is a little bit
+                    longer.
+                  </p>
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
@@ -304,8 +321,14 @@
                       >
                         View
                       </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Edit
+                      </button>
                     </div>
-                    <small class="text-muted">??? coin</small>
+                    <small class="text-muted">9 mins</small>
                   </div>
                 </div>
               </div>
@@ -325,12 +348,16 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c" />
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    로그인 해주세요.
+                    Thumbnail
                   </text>
                 </svg>
 
                 <div class="card-body">
-                  <p class="card-text">제품 설명</p>
+                  <p class="card-text">
+                    This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This content is a little bit
+                    longer.
+                  </p>
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
@@ -341,8 +368,14 @@
                       >
                         View
                       </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Edit
+                      </button>
                     </div>
-                    <small class="text-muted">??? coin</small>
+                    <small class="text-muted">9 mins</small>
                   </div>
                 </div>
               </div>

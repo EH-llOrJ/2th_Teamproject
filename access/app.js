@@ -391,8 +391,18 @@ app.get("/viewEmail", (req, res) => {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
+// 로그인 전 store 페이지
 app.get("/store", (req, res) => {
   res.render("./storePage/store");
+});
+
+// 로그인 후 유저 store keeping page
+app.get("/storeKeep", (req, res) => {
+  res.render("./storePage/store(keep)");
+});
+
+app.get("/storeManager", (req, res) => {
+  res.render("./storePage/store(manager)");
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////
