@@ -42,7 +42,9 @@ h1 {
   vertical-align: top;
 }
 
-.checkbtn_disable {
+.checkbtn_disable,
+.checkbtn_disable2,
+.checkbtn_disable3 {
   margin-top: 5px;
   margin-right: 3px;
   justify-content: space-between;
@@ -55,7 +57,9 @@ h1 {
   font-weight: 500;
   cursor: pointer;
 }
-.checkbtn_able {
+.checkbtn_able,
+.checkbtn_able2,
+.checkbtn_able3 {
   font-size: 15px;
   margin-top: 5px;
   margin-right: 3px;
@@ -121,7 +125,9 @@ h1 {
   cursor: pointer;
 }
 
-.emailcheck {
+.emailcheck,
+.userIdcheck,
+.nickcheck {
   color: rgb(243, 114, 114);
   font-size: 12px;
   font-weight: 900;

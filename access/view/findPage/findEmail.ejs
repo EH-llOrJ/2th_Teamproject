@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>이메일찾기</title>
+    <title>아이디찾기</title>
     <link rel="stylesheet" href="view/findPage/find.css">
     <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <!-- <script
@@ -17,7 +17,24 @@
     <div class="container">
       <div class="form-sign-in-container">
         <div id="join_title">
-        <h1>이메일찾기</h1>
+        <h1>아이디찾기</h1>
+        </div>
+        <!-- 이메일 -->
+        <div class="content">
+          <input type="email" placeholder="이메일" id="id" name="email" class="id" maxlength="30" />
+          <button id="email_ctf_btn" class="checkbtn_disable3" disabled>인증번호 발송</button>
+        </div>
+        <!-- 이메일 인증번호 -->
+        <div class="content">
+        <input
+          type="text"
+          id="email_ctf"
+          name="email_ctf"
+          class="id"
+          placeholder="인증번호"
+        />
+        <!-- 인증번호 검사 버튼 -->
+        <button id="" class="checkbtn_disable">인증번호 확인</button>
         </div>
           <!-- 이름 -->
           <div class="content">
@@ -41,16 +58,6 @@
             maxlength="20"
           />
           </div>
-          <!-- 생년월일 -->
-          <div class="content">
-            <span class="birthName">생년월일</span>
-          <input
-            type="date"
-            id="birth"
-            name="birth"
-            class="birth"
-          />
-          </div>
           <!-- 비밀번호 재설정 button -->
           <button
             type="submit"
@@ -61,36 +68,67 @@
           </button>
       </div>
       <script>
+        let email = document.querySelector('#id');
+        let email_ctf = document.querySelector("#email_ctf")
         let name = document.querySelector('#name');
         let phone = document.querySelector('.phoneNum');
-        let birth = document.querySelector('.birth');
 
         // 버튼 활성화 조건 생성
+        let a = 0;
         let b = 0;
         let c = 0;
+        let d = 0;
+
+        // 이메일 입력 시
+        email.onkeyup = function(){
+            let val = email.value;
+            if(val == ""){
+              document.querySelector('.checkbtn_disable3').disabled = true;
+              document.querySelector('.checkbtn_disable3').classList.remove('checkbtn_able3');
+                a = 0;
+            }else{
+              document.querySelector('.checkbtn_disable3').disabled = false;
+              document.querySelector('.checkbtn_disable3').classList.add('checkbtn_able3');
+                a = 1
+            }
+        }
+
+        // 인증번호 입력 시
+        email_ctf.onkeyup = function() {
+          let val = email_ctf.value;
+          if(val == ""){
+              document.querySelector('.checkbtn_disable').disabled = true;
+              document.querySelector('.checkbtn_disable').classList.remove('checkbtn_able');
+                b = 0;
+            }else{
+              document.querySelector('.checkbtn_disable').disabled = false;
+              document.querySelector('.checkbtn_disable').classList.add('checkbtn_able');
+                b = 1
+            }
+        }
 
         // 이름 입력 시
         name.onkeyup = function(){
             let val = name.value;
-            if(val == ""){
-                b = 0;
-            }else{
-                b = 1
-            }
-        }
-        // 핸드폰 입력 시
-        phone.onkeyup = function(){
-            let val = phone.value;
             if(val == ""){
                 c = 0;
             }else{
                 c = 1
             }
         }
+        // 핸드폰 입력 시
+        phone.onkeyup = function(){
+            let val = phone.value;
+            if(val == ""){
+                d = 0;
+            }else{
+                d = 1
+            }
+        }
          
         // 모든 조건 입력 시 버튼 활성화
         window.onkeyup = function(){
-        if(b == 1 && c == 1) {
+        if(a == 1 && b == 1 && c == 1 && d == 1) {
             document.querySelector('.btn').disabled = false;
         }else{
             document.querySelector('.btn').disabled = true;
@@ -103,9 +141,9 @@
             url: '/checkPerson',
             type: 'post',
             data: {
+                email : email.value,
                 name : name.value,
                 phone : phone.value,
-                birth : birth.value,
             },
             success: function(data){
                 if(data == 'fail') {

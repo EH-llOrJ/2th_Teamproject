@@ -113,3 +113,35 @@ h1 {
 .textStart {
   text-align: start;
 }
+
+.checkbtn_disable,
+.checkbtn_disable2,
+.checkbtn_disable3 {
+  margin-top: 5px;
+  margin-right: 3px;
+  justify-content: space-between;
+  border: none;
+  background-color: #f8f4f4;
+  color: #948f8f;
+  border-radius: 5px;
+  width: 30%;
+  height: 40px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.checkbtn_able,
+.checkbtn_able2,
+.checkbtn_able3 {
+  font-size: 15px;
+  margin-top: 5px;
+  margin-right: 3px;
+  justify-content: space-between;
+  background-color: rgb(48, 46, 46);
+  color: rgb(250, 246, 246);
+  border-radius: 5px;
+  width: 30%;
+  height: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
