@@ -147,9 +147,26 @@
         background-color: rgba(178, 0, 0, 0.9);
         transition: 0.2s;
       }
+      .text-red {
+        font-size: 20px;
+        color: rgba(178, 0, 0, 0.9);
+      }
+      .flex {
+        margin-top: 10px;
+        width: 70%;
+        display: flex;
+        justify-content: space-between;
+      }
+      .posi-ab {
+        width: 100%;
+        height: 100%;
+      }
+      .posi-re {
+        position: relative;
+        width: 100%;
+        height: 250px;
+      }
     </style>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
     <header>
@@ -157,22 +174,17 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-8 col-md-7 py-4 al-center">
-              <h4 class="text-white">로그인 하시겠습니까?</h4>
+              <h4 class="text-white">즐거운 쇼핑 되세요.</h4>
               <!-- <p class="text-muted">
               </p> -->
             </div>
             <div class="col-sm-4 offset-md-1 py-4">
-              <h4 class="text-white">Login</h4>
-              <ul class="list-unstyled mar_b">
-                <input type="text" placeholder="User ID" />
-                <input type="password" placeholder="Password" />
-                <button
-                  class="storeLogin"
-                  onclick="location.href = '/storeKeep'"
-                >
-                  로그인
-                </button>
-              </ul>
+              <h4 class="text-white">??? 님 현재 보유 코인</h4>
+              <h5 class="text-white">100 coin</h5>
+              <div class="flex">
+                <a href="" class="text-red">coin 충전</a>
+                <a href="/store" class="text-red">Logout</a>
+              </div>
             </div>
           </div>
         </div>
@@ -238,25 +250,15 @@
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
               <div class="card shadow-sm">
-                <svg
-                  class="bd-placeholder-img card-img-top"
-                  width="100%"
-                  height="225"
-                  xmlns="http://www.w3.org/2000/svg"
-                  role="img"
-                  aria-label="Placeholder: Thumbnail"
-                  preserveAspectRatio="xMidYMid slice"
-                  focusable="false"
-                >
-                  <title>Placeholder</title>
-                  <rect width="100%" height="100%" fill="#55595c" />
-                  <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    로그인 해주세요.
-                  </text>
-                </svg>
+                <div class="posi-re">
+                  <img class="posi-ab" src="/image/부적.jpeg" alt="" />
+                </div>
 
                 <div class="card-body">
-                  <p class="card-text">제품 설명</p>
+                  <p class="card-text">
+                    [행운의 부적]<br />
+                    괴물에게 잡혀도 1번 되살아나요~
+                  </p>
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
@@ -268,7 +270,7 @@
                         Buy
                       </button>
                     </div>
-                    <small class="text-muted">??? coin</small>
+                    <small class="text-muted">100 coin</small>
                   </div>
                 </div>
               </div>
@@ -288,12 +290,16 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c" />
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    로그인 해주세요.
+                    Thumbnail
                   </text>
                 </svg>
 
                 <div class="card-body">
-                  <p class="card-text">제품 설명</p>
+                  <p class="card-text">
+                    This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This content is a little bit
+                    longer.
+                  </p>
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
@@ -305,7 +311,7 @@
                         Buy
                       </button>
                     </div>
-                    <small class="text-muted">??? coin</small>
+                    <small class="text-muted">100 coin</small>
                   </div>
                 </div>
               </div>
@@ -325,12 +331,16 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c" />
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    로그인 해주세요.
+                    Thumbnail
                   </text>
                 </svg>
 
                 <div class="card-body">
-                  <p class="card-text">제품 설명</p>
+                  <p class="card-text">
+                    This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This content is a little bit
+                    longer.
+                  </p>
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
@@ -342,7 +352,7 @@
                         Buy
                       </button>
                     </div>
-                    <small class="text-muted">??? coin</small>
+                    <small class="text-muted">100 coin</small>
                   </div>
                 </div>
               </div>
@@ -373,4 +383,14 @@
       crossorigin="anonymous"
     ></script>
   </body>
+  <script>
+    document.querySelector(".btn").onclick = function () {
+      if (!confirm("정말 구매하시겠습니까?")) {
+        alert("취소되었습니다.");
+      } else {
+        alert("구매완료");
+        window.reload();
+      }
+    };
+  </script>
 </html>
