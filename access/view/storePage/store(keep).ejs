@@ -267,7 +267,7 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                        Buy
                       </button>
                     </div>
                     <small class="text-muted">100 coin</small>
@@ -308,7 +308,7 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                        Buy
                       </button>
                     </div>
                     <small class="text-muted">100 coin</small>
@@ -349,7 +349,7 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                        Buy
                       </button>
                     </div>
                     <small class="text-muted">100 coin</small>
@@ -383,4 +383,14 @@
       crossorigin="anonymous"
     ></script>
   </body>
+  <script>
+    document.querySelector(".btn").onclick = function () {
+      if (!confirm("정말 구매하시겠습니까?")) {
+        alert("취소되었습니다.");
+      } else {
+        alert("구매완료");
+        window.reload();
+      }
+    };
+  </script>
 </html>

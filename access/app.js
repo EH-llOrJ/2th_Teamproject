@@ -401,6 +401,7 @@ app.get("/storeKeep", (req, res) => {
   res.render("./storePage/store(keep)");
 });
 
+// 로그인 후 관리자 store page
 app.get("/storeManager", (req, res) => {
   res.render("./storePage/store(manager)");
 });
