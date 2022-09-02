@@ -254,12 +254,27 @@ h3 {
 
 .right-date-content {
   display: inline;
+  margin: 5px 20px;
 }
 
 #right-clickbtn {
   position: absolute;
   right: 12%;
   bottom: 20%;
+  border: solid 3px rgb(43, 37, 37);
+  width: 30%;
+  height: 50px;
+  padding: 10px 20px 10px 20px;
+  box-sizing: border-box;
+  background: rgba(63, 56, 56, 0);
+  font-weight: 600;
+  color: rgb(43, 37, 37);
+  cursor: pointer;
+  font-size: 17px;
+  border-radius: 5px;
+  margin-left: 20px;
+  letter-spacing: 5px;
+  font-family: "Nanum Gothic Coding", monospace;
 }
 
 #right-date-title {
